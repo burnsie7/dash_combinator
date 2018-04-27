@@ -1,0 +1,956 @@
+{
+    "board_title": "AWS RDS - SWGF",
+    "description": "",
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "account",
+            "prefix": "aws_account"
+        },
+        {
+            "default": "*",
+            "name": "region",
+            "prefix": "region"
+        },
+        {
+            "default": "*",
+            "name": "zone",
+            "prefix": "availability-zone"
+        },
+        {
+            "default": "*",
+            "name": "db_class",
+            "prefix": "dbinstanceclass"
+        }
+    ],
+    "widgets": [
+        {
+            "aggr": "avg",
+            "aggregator": "max",
+            "autoscale": true,
+            "calc_func": "raw",
+            "conditional_formats": [],
+            "custom_unit": null,
+            "height": 4,
+            "is_valid_query": false,
+            "legend": false,
+            "legend_size": "0",
+            "metric": "",
+            "metric_type": "standard",
+            "padding": 8,
+            "precision": 1,
+            "query": "1000*max:aws.rds.read_latency{$account,$region,$zone,$db_class}",
+            "res_calc_func": "raw",
+            "tags": [],
+            "text_align": "center",
+            "text_size": "auto",
+            "tile_def": {
+                "autoscale": true,
+                "custom_unit": null,
+                "precision": 1,
+                "requests": [
+                    {
+                        "aggregator": "max",
+                        "conditional_formats": [],
+                        "q": "max:aws.rds.read_latency{$account,$region,$zone,$db_class}"
+                    }
+                ],
+                "text_align": "center",
+                "viz": "query_value"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "center",
+            "title_size": 13,
+            "title_text": "Max read latency",
+            "type": "query_value",
+            "width": 16,
+            "wrapped": true,
+            "x": 58,
+            "y": 7
+        },
+        {
+            "aggr": "avg",
+            "aggregator": "max",
+            "autoscale": true,
+            "calc_func": "raw",
+            "conditional_formats": [],
+            "custom_unit": null,
+            "height": 4,
+            "is_valid_query": false,
+            "legend": false,
+            "legend_size": "0",
+            "metric": "",
+            "metric_type": "standard",
+            "padding": 8,
+            "precision": 1,
+            "query": "1000*max:aws.rds.write_latency{$account,$region,$zone,$db_class}",
+            "res_calc_func": "raw",
+            "tags": [],
+            "text_align": "center",
+            "text_size": "auto",
+            "tile_def": {
+                "autoscale": true,
+                "custom_unit": null,
+                "precision": 1,
+                "requests": [
+                    {
+                        "aggregator": "max",
+                        "conditional_formats": [],
+                        "q": "max:aws.rds.write_latency{$account,$region,$zone,$db_class}"
+                    }
+                ],
+                "text_align": "center",
+                "viz": "query_value"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "center",
+            "title_size": 13,
+            "title_text": "Max write latency",
+            "type": "query_value",
+            "width": 16,
+            "wrapped": true,
+            "x": 58,
+            "y": 0
+        },
+        {
+            "aggr": "avg",
+            "aggregator": "avg",
+            "autoscale": true,
+            "calc_func": "raw",
+            "conditional_formats": [],
+            "custom_unit": null,
+            "height": 4,
+            "is_valid_query": true,
+            "metric": "aws.rds.read_iops",
+            "metric_type": "standard",
+            "padding": 8,
+            "precision": 1,
+            "query": "avg:aws.rds.read_iops{$account,$region,$zone,$db_class}",
+            "res_calc_func": "raw",
+            "tags": [
+                "$account",
+                "$region",
+                "$zone",
+                "$db_class"
+            ],
+            "text_align": "center",
+            "text_size": "auto",
+            "tile_def": {
+                "autoscale": true,
+                "custom_unit": null,
+                "precision": 1,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:aws.rds.read_iops{$account,$region,$zone,$db_class}"
+                    }
+                ],
+                "text_align": "center",
+                "viz": "query_value"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "center",
+            "title_size": 13,
+            "title_text": "Avg read ops /second",
+            "type": "query_value",
+            "width": 15,
+            "wrapped": true,
+            "x": 75,
+            "y": 0
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "gray",
+            "font_size": "18",
+            "height": 14,
+            "html": "Replication lag",
+            "refresh_every": 30000,
+            "text_align": "center",
+            "tick": true,
+            "tick_edge": "right",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 14,
+            "x": 0,
+            "y": 29
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "top10(avg:aws.rds.replica_lag{$account,$region,$zone,$db_class} by {dbinstanceidentifier})",
+                        "style": {
+                            "palette": "warm"
+                        },
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Replication lag by instance, top 10 past day",
+            "type": "timeseries",
+            "width": 42,
+            "x": 15,
+            "y": 29
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top10(max:aws.rds.database_connections{$account,$region,$zone,$db_class} by {dbinstanceidentifier})",
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Connections by instance, top 10 past day",
+            "type": "timeseries",
+            "width": 42,
+            "x": 15,
+            "y": 14
+        },
+        {
+            "height": 13,
+            "margin": "",
+            "sizing": "zoom",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "image",
+            "url": "/static/images/saas_logos/bot/amazon_rds.png",
+            "width": 14,
+            "x": 0,
+            "y": 0
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(avg:aws.rds.replica_lag{$account,$zone,$region,$db_class} by {dbinstanceidentifier}, 10, 'max', 'desc')",
+                        "style": {
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Avg replication lag by instance past day",
+            "type": "toplist",
+            "width": 32,
+            "x": 58,
+            "y": 29
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "gray",
+            "font_size": "18",
+            "height": 14,
+            "html": "Connections",
+            "refresh_every": 30000,
+            "text_align": "center",
+            "tick": true,
+            "tick_edge": "right",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 14,
+            "x": 0,
+            "y": 14
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(max:aws.rds.database_connections{$account,$zone,$region,$db_class} by {dbinstanceidentifier}, 10, 'max', 'desc')",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Connections by instance, past day",
+            "type": "toplist",
+            "width": 32,
+            "x": 58,
+            "y": 14
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top10(avg:aws.rds.cpuutilization{$account,$region,$zone,$db_class} by {dbinstanceidentifier})",
+                        "style": {
+                            "palette": "warm"
+                        },
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "CPU by instance (%), top 10 past day",
+            "type": "timeseries",
+            "width": 42,
+            "x": 15,
+            "y": 74
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "gray",
+            "font_size": "18",
+            "height": 14,
+            "html": "Compute",
+            "refresh_every": 30000,
+            "text_align": "center",
+            "tick": true,
+            "tick_edge": "right",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 14,
+            "x": 0,
+            "y": 74
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(avg:aws.rds.cpuutilization{$account,$zone,$region,$db_class} by {dbinstanceidentifier}, 10, 'mean', 'desc')",
+                        "style": {
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "CPU by instance, past day",
+            "type": "toplist",
+            "width": 32,
+            "x": 58,
+            "y": 74
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top10(avg:aws.rds.read_iops{$account,$region,$zone,$db_class} by {dbinstanceidentifier}.as_count())",
+                        "style": {
+                            "palette": "green"
+                        },
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Read operations per second by instance, top 10 past day",
+            "type": "timeseries",
+            "width": 42,
+            "x": 15,
+            "y": 44
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(avg:aws.rds.read_iops{$account,$zone,$region,$db_class} by {dbinstanceidentifier}, 10, 'mean', 'desc')",
+                        "style": {
+                            "palette": "green"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Read operations /s by instance, past day",
+            "type": "toplist",
+            "width": 32,
+            "x": 58,
+            "y": 44
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "top10(avg:aws.rds.read_latency{$account,$region,$zone,$db_class} by {dbinstanceidentifier})",
+                        "style": {
+                            "palette": "green"
+                        },
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Read Latency by instance, top 10 past day",
+            "type": "timeseries",
+            "width": 42,
+            "x": 15,
+            "y": 59
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(avg:aws.rds.read_latency{$account,$zone,$region,$db_class} by {dbinstanceidentifier}, 10, 'mean', 'desc')",
+                        "style": {
+                            "palette": "green"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Read latency by instance, past day",
+            "type": "toplist",
+            "width": 32,
+            "x": 58,
+            "y": 59
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "top10(avg:aws.rds.write_iops{$account,$region,$zone,$db_class} by {dbinstanceidentifier}.as_rate())",
+                        "style": {
+                            "palette": "purple"
+                        },
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Write operations per second by instance, top 10 past day",
+            "type": "timeseries",
+            "width": 42,
+            "x": 109,
+            "y": 46
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(avg:aws.rds.write_iops{$account,$zone,$region,$db_class} by {dbinstanceidentifier}, 10, 'mean', 'desc')",
+                        "style": {
+                            "palette": "purple"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Write operations per second by instance, past day",
+            "type": "toplist",
+            "width": 32,
+            "x": 152,
+            "y": 46
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "top10(avg:aws.rds.write_latency{$account,$region,$zone,$db_class} by {dbinstanceidentifier})",
+                        "style": {
+                            "palette": "purple"
+                        },
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Write Latency by instance, top 10 past day",
+            "type": "timeseries",
+            "width": 42,
+            "x": 109,
+            "y": 61
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(avg:aws.rds.write_latency{$account,$zone,$region,$db_class} by {dbinstanceidentifier}, 10, 'mean', 'desc')",
+                        "style": {
+                            "palette": "purple"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Write latency by instance, past day",
+            "type": "toplist",
+            "width": 32,
+            "x": 152,
+            "y": 61
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:aws.rds.freeable_memory{$account,$region,$zone,$db_class} by {dbinstanceidentifier}",
+                        "style": {
+                            "palette": "cool"
+                        },
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Available RAM by instance, bottom 10 past day",
+            "type": "timeseries",
+            "width": 42,
+            "x": 15,
+            "y": 89
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "gray",
+            "font_size": "18",
+            "height": 14,
+            "html": "RAM",
+            "refresh_every": 30000,
+            "text_align": "center",
+            "tick": true,
+            "tick_edge": "right",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 14,
+            "x": 0,
+            "y": 89
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(avg:aws.rds.freeable_memory{$account,$zone,$region,$db_class} by {dbinstanceidentifier}, 10, 'mean', 'desc')",
+                        "style": {
+                            "palette": "cool"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Available RAM by instance, past day",
+            "type": "toplist",
+            "width": 32,
+            "x": 58,
+            "y": 89
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:aws.rds.free_storage_space{$account,$region,$zone,$db_class} by {dbinstanceidentifier}",
+                        "style": {
+                            "palette": "grey"
+                        },
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Available Disk by instance, bottom 10 past day",
+            "type": "timeseries",
+            "width": 42,
+            "x": 109,
+            "y": 76
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "gray",
+            "font_size": "18",
+            "height": 14,
+            "html": "Disk",
+            "refresh_every": 30000,
+            "text_align": "center",
+            "tick": true,
+            "tick_edge": "right",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 14,
+            "x": 94,
+            "y": 76
+        },
+        {
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(avg:aws.rds.free_storage_space{$account,$zone,$region,$db_class} by {dbinstanceidentifier}, 10, 'mean', 'desc')",
+                        "style": {
+                            "palette": "grey"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Available Disk by instance, past day",
+            "type": "toplist",
+            "width": 32,
+            "x": 152,
+            "y": 76
+        },
+        {
+            "aggr": "avg",
+            "aggregator": "avg",
+            "autoscale": true,
+            "calc_func": "raw",
+            "conditional_formats": [],
+            "custom_unit": null,
+            "height": 4,
+            "is_valid_query": true,
+            "metric": "aws.rds.write_iops",
+            "metric_type": "standard",
+            "padding": 8,
+            "precision": 1,
+            "query": "avg:aws.rds.write_iops{$account,$region,$zone,$db_class}",
+            "res_calc_func": "raw",
+            "tags": [
+                "$account",
+                "$region",
+                "$zone",
+                "$db_class"
+            ],
+            "text_align": "center",
+            "text_size": "auto",
+            "tile_def": {
+                "autoscale": true,
+                "custom_unit": null,
+                "precision": 1,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:aws.rds.write_iops{$account,$region,$zone,$db_class}"
+                    }
+                ],
+                "text_align": "center",
+                "viz": "query_value"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "center",
+            "title_size": 13,
+            "title_text": "Avg write ops /second",
+            "type": "query_value",
+            "width": 15,
+            "wrapped": true,
+            "x": 75,
+            "y": 7
+        },
+        {
+            "aggr": "avg",
+            "aggregator": "avg",
+            "autoscale": true,
+            "board_id": 53619,
+            "calc_func": "raw",
+            "conditional_formats": [],
+            "custom_unit": null,
+            "height": 11,
+            "is_valid_query": true,
+            "metric": "aws.rds.database_connections",
+            "metric_type": "standard",
+            "padding": 8,
+            "precision": 0,
+            "query": "avg:aws.rds.database_connections{*}",
+            "res_calc_func": "raw",
+            "tags": [],
+            "text_align": "center",
+            "tile_def": {
+                "autoscale": true,
+                "custom_unit": null,
+                "precision": 0,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:aws.rds.database_connections{*}"
+                    }
+                ],
+                "text_align": "center",
+                "viz": "query_value"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Number of connections",
+            "type": "query_value",
+            "width": 24,
+            "wrapped": true,
+            "x": 33,
+            "y": 0
+        },
+        {
+            "height": 16,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "avg:aws.rds.disk_queue_depth{$account,$region,$zone,$db_class} by {dbinstanceidentifier}",
+                        "style": {
+                            "palette": "warm"
+                        },
+                        "type": "bars"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Disk queue",
+            "type": "timeseries",
+            "width": 90,
+            "x": 94,
+            "y": 0
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "gray",
+            "font_size": "18",
+            "height": 29,
+            "html": "Read\nOperations & Latency",
+            "refresh_every": 30000,
+            "text_align": "center",
+            "tick": true,
+            "tick_edge": "right",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 14,
+            "x": 0,
+            "y": 44
+        },
+        {
+            "board_id": 53619,
+            "event_size": "s",
+            "height": 24,
+            "query": "source: rds",
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Event stream",
+            "type": "event_stream",
+            "width": 90,
+            "x": 94,
+            "y": 19
+        },
+        {
+            "board_id": 53619,
+            "check": "aws.status",
+            "group": null,
+            "grouping": "cluster",
+            "height": 13,
+            "tags": [
+                "service:rds"
+            ],
+            "text_align": "center",
+            "text_size": "auto",
+            "timeframe": "30m",
+            "title": true,
+            "title_align": "center",
+            "title_size": 13,
+            "title_text": "RDS service status",
+            "type": "check_status",
+            "width": 17,
+            "x": 15,
+            "y": 0
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "gray",
+            "board_id": 53687,
+            "font_size": "18",
+            "height": 29,
+            "html": "Write Operations\n & Latency",
+            "refresh_every": 30000,
+            "text_align": "center",
+            "tick": true,
+            "tick_edge": "right",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 14,
+            "x": 94,
+            "y": 46
+        }
+    ],
+    "width": "100%"
+}

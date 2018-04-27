@@ -1,0 +1,343 @@
+{
+    "board_title": "SWGF - T2",
+    "description": "",
+    "template_variables": [
+        {
+            "default": "region:us-east-1",
+            "name": "region",
+            "prefix": "region"
+        },
+        {
+            "default": "*",
+            "name": "availability_zone",
+            "prefix": "availability-zone"
+        },
+        {
+            "default": "env:swgf",
+            "name": "env",
+            "prefix": "env"
+        },
+        {
+            "default": "targetgroup:targetgroup/prod-app-swgf-tg/85a53e3eb22fc0a3",
+            "name": "alb_target_group",
+            "prefix": "targetgroup"
+        },
+        {
+            "default": "loadbalancer:app/app-prod-alb/b3ccae0a6b05c648",
+            "name": "alb_name",
+            "prefix": "loadbalancer"
+        }
+    ],
+    "widgets": [
+        {
+            "aggr": "sum",
+            "aggregator": "min",
+            "autoscale": true,
+            "calc_func": "raw",
+            "conditional_formats": [
+                {
+                    "comparator": ">",
+                    "custom_bg_color": null,
+                    "custom_fg_color": null,
+                    "invert": false,
+                    "palette": "green_on_white",
+                    "value": 0
+                },
+                {
+                    "comparator": "<=",
+                    "custom_bg_color": null,
+                    "custom_fg_color": null,
+                    "invert": false,
+                    "palette": "red_on_white",
+                    "value": 0
+                }
+            ],
+            "custom_unit": null,
+            "height": 8,
+            "isShared": false,
+            "is_valid_query": true,
+            "legend": false,
+            "legend_size": "0",
+            "metric": "aws.elb.healthy_host_count",
+            "metric_type": "standard",
+            "precision": 0,
+            "query": "sum:aws.elb.healthy_host_count{$scope}",
+            "res_calc_func": "raw",
+            "tags": [
+                "$scope"
+            ],
+            "text_align": "center",
+            "text_size": "auto",
+            "tile_def": {
+                "autoscale": true,
+                "custom_unit": null,
+                "precision": 0,
+                "requests": [
+                    {
+                        "aggregator": "min",
+                        "conditional_formats": [
+                            {
+                                "comparator": ">",
+                                "custom_bg_color": null,
+                                "custom_fg_color": null,
+                                "invert": false,
+                                "palette": "green_on_white",
+                                "value": 0
+                            },
+                            {
+                                "comparator": "<=",
+                                "custom_bg_color": null,
+                                "custom_fg_color": null,
+                                "invert": false,
+                                "palette": "red_on_white",
+                                "value": 0
+                            }
+                        ],
+                        "q": "sum:aws.applicationelb.healthy_host_count{$region,$availability_zone,$env,$alb_target_group,$alb_name}"
+                    }
+                ],
+                "text_align": "left",
+                "viz": "query_value"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 13,
+            "title_text": "Healthy hosts count (min)",
+            "type": "query_value",
+            "width": 13,
+            "x": 13,
+            "y": 0
+        },
+        {
+            "board_id": 33142,
+            "height": 10,
+            "isShared": false,
+            "margin": "",
+            "sizing": "fit",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "image",
+            "url": "/static/images/saas_logos/bot/amazon_alb.png",
+            "width": 13,
+            "x": 0,
+            "y": 0
+        },
+        {
+            "board_id": 33142,
+            "height": 13,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "sum:aws.applicationelb.httpcode_target_2xx{$region,$availability_zone,$env,$alb_target_group,$alb_name} by {host}.as_count()",
+                        "style": {
+                            "palette": "dog_classic"
+                        },
+                        "type": "bars"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "HTTP 2xx Responses",
+            "type": "timeseries",
+            "width": 39,
+            "x": 39,
+            "y": 10
+        },
+        {
+            "board_id": 33142,
+            "height": 13,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "sum:aws.applicationelb.httpcode_target_4xx{$region,$availability_zone,$env,$alb_target_group,$alb_name} by {host}.as_count()",
+                        "style": {
+                            "palette": "warm"
+                        },
+                        "type": "bars"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "HTTP 4xx Responses",
+            "type": "timeseries",
+            "width": 39,
+            "x": 39,
+            "y": 40
+        },
+        {
+            "board_id": 33142,
+            "height": 13,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "sum:aws.applicationelb.httpcode_target_5xx{$region,$availability_zone,$env,$alb_target_group,$alb_name} by {host}.as_count()",
+                        "style": {
+                            "palette": "warm"
+                        },
+                        "type": "bars"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "HTTP 5xx Responses",
+            "type": "timeseries",
+            "width": 39,
+            "x": 39,
+            "y": 55
+        },
+        {
+            "height": 13,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "4",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:aws.applicationelb.target_response_time.average{$region,$availability_zone,$env,$alb_target_group,$alb_name} * 1000",
+                        "type": "area"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Response Time",
+            "type": "timeseries",
+            "width": 39,
+            "x": 0,
+            "y": 55
+        },
+        {
+            "board_id": 33142,
+            "height": 13,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "sum:aws.applicationelb.active_connection_count{$region,$availability_zone,$env,$alb_target_group,$alb_name} by {host}",
+                        "style": {
+                            "palette": "dog_classic"
+                        },
+                        "type": "bars"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Active Connections",
+            "type": "timeseries",
+            "width": 39,
+            "x": 0,
+            "y": 10
+        },
+        {
+            "board_id": 33142,
+            "height": 13,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "sum:aws.applicationelb.new_connection_count{$region,$availability_zone,$env,$alb_target_group,$alb_name} by {host}",
+                        "style": {
+                            "palette": "dog_classic"
+                        },
+                        "type": "bars"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "New Connections",
+            "type": "timeseries",
+            "width": 39,
+            "x": 0,
+            "y": 25
+        },
+        {
+            "board_id": 33142,
+            "height": 13,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "sum:aws.applicationelb.processed_bytes{$region,$availability_zone,$env,$alb_target_group,$alb_name} by {host}",
+                        "style": {
+                            "palette": "dog_classic"
+                        },
+                        "type": "area"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Processed Bytes",
+            "type": "timeseries",
+            "width": 39,
+            "x": 0,
+            "y": 40
+        }
+    ],
+    "width": "100%"
+}

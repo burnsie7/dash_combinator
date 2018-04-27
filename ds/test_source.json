@@ -1,0 +1,60 @@
+{
+    "board_title": "AWS Lambda - SWGF",
+    "description": "",
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "function",
+            "prefix": "functionname"
+        },
+        {
+            "default": "*",
+            "name": "region",
+            "prefix": "region"
+        }
+    ],
+    "widgets": [
+        {
+            "board_id": 100273,
+            "height": 12,
+            "margin": "",
+            "sizing": "fit",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "image",
+            "url": "/static/images/screenboard/integrations/amazon_lambda.png",
+            "width": 21,
+            "x": 0,
+            "y": 0
+        },
+        {
+            "board_id": 100273,
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:aws.lambda.duration.sum{$function} by {functionname}",
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Execution duration by function",
+            "type": "timeseries",
+            "width": 47,
+            "x": 22,
+            "y": 23
+        }
+    ],
+    "width": "100%"
+}

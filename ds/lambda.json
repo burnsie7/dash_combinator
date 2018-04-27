@@ -1,0 +1,396 @@
+{
+    "board_title": "AWS Lambda - SWGF",
+    "description": "",
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "function",
+            "prefix": "functionname"
+        },
+        {
+            "default": "*",
+            "name": "region",
+            "prefix": "region"
+        }
+    ],
+    "widgets": [
+        {
+            "board_id": 100273,
+            "height": 12,
+            "margin": "",
+            "sizing": "fit",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "image",
+            "url": "/static/images/screenboard/integrations/amazon_lambda.png",
+            "width": 21,
+            "x": 0,
+            "y": 0
+        },
+        {
+            "board_id": 100273,
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:aws.lambda.duration.sum{$function} by {functionname}",
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Execution duration by function",
+            "type": "timeseries",
+            "width": 47,
+            "x": 22,
+            "y": 23
+        },
+        {
+            "board_id": 100273,
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(sum:aws.lambda.invocations{$region} by {functionname}.as_count(), 20, 'sum', 'desc')",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Top invoked functions",
+            "type": "toplist",
+            "width": 47,
+            "x": 70,
+            "y": 7
+        },
+        {
+            "board_id": 100273,
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:aws.lambda.errors{$function,$region} by {functionname}.as_count()",
+                        "style": {
+                            "palette": "red"
+                        },
+                        "type": "bars"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Execution errors by function",
+            "type": "timeseries",
+            "width": 47,
+            "x": 118,
+            "y": 23
+        },
+        {
+            "board_id": 100273,
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:aws.lambda.throttles{$function,$region} by {functionname}.as_count()",
+                        "type": "bars"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Throttled invocation attempts by function",
+            "type": "timeseries",
+            "width": 47,
+            "x": 118,
+            "y": 39
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "yellow",
+            "board_id": 100273,
+            "font_size": "14",
+            "height": 6,
+            "html": "Note: This integration requires the permissions \"logs:DescribeLogGroups\", \"logs:DescribeLogStreams\", and \"logs:FilterLogEvents\"  to access all features. See our [documentation](http://docs.datadoghq.com/integrations/aws/).",
+            "refresh_every": 30000,
+            "text_align": "left",
+            "tick": false,
+            "tick_edge": "left",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 59,
+            "x": 64,
+            "y": 59
+        },
+        {
+            "board_id": 100273,
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "sum:aws.lambda.invocations{$function,$region} by {functionname}",
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Function invocations",
+            "type": "timeseries",
+            "width": 47,
+            "x": 70,
+            "y": 23
+        },
+        {
+            "board_id": 101186,
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(sum:aws.lambda.duration{*} by {functionname}, 20, 'mean', 'desc')",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Average execution time by function",
+            "type": "toplist",
+            "width": 47,
+            "x": 22,
+            "y": 7
+        },
+        {
+            "board_id": 101186,
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(avg:aws.lambda.duration.sum{$function,$region} by {functionname}, 20, 'sum', 'desc')",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Total execution time",
+            "type": "toplist",
+            "width": 47,
+            "x": 22,
+            "y": 39
+        },
+        {
+            "board_id": 101186,
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(sum:aws.lambda.errors{$function,$region} by {functionname}.as_count(), 20, 'sum', 'desc')",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Execution errors",
+            "type": "toplist",
+            "width": 47,
+            "x": 118,
+            "y": 7
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "gray",
+            "board_id": 101186,
+            "font_size": "18",
+            "height": 5,
+            "html": "Invocations",
+            "refresh_every": 30000,
+            "text_align": "center",
+            "tick": true,
+            "tick_edge": "bottom",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 47,
+            "x": 70,
+            "y": 0
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "gray",
+            "board_id": 101186,
+            "font_size": "18",
+            "height": 5,
+            "html": "Errors",
+            "refresh_every": 30000,
+            "text_align": "center",
+            "tick": true,
+            "tick_edge": "bottom",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 47,
+            "x": 118,
+            "y": 0
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "gray",
+            "board_id": 101186,
+            "font_size": "18",
+            "height": 5,
+            "html": "Execution time",
+            "refresh_every": 30000,
+            "text_align": "center",
+            "tick": true,
+            "tick_edge": "bottom",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 47,
+            "x": 22,
+            "y": 0
+        },
+        {
+            "autoscale": true,
+            "board_id": 101186,
+            "height": 7,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "aggregator": "sum",
+                        "conditional_formats": [],
+                        "q": "sum:aws.lambda.duration.sum{$function,$region}"
+                    }
+                ],
+                "viz": "query_value"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "center",
+            "title_size": 16,
+            "title_text": "Cumulative execution time",
+            "type": "query_value",
+            "width": 21,
+            "x": 0,
+            "y": 14
+        },
+        {
+            "autoscale": true,
+            "board_id": 101186,
+            "height": 7,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "aggregator": "sum",
+                        "conditional_formats": [
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_red",
+                                "value": "5"
+                            },
+                            {
+                                "comparator": "<=",
+                                "palette": "white_on_green",
+                                "value": "5"
+                            }
+                        ],
+                        "q": "sum:aws.lambda.errors{$region}.as_count()"
+                    }
+                ],
+                "viz": "query_value"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "center",
+            "title_size": 16,
+            "title_text": "Errors",
+            "type": "query_value",
+            "width": 21,
+            "x": 0,
+            "y": 24
+        }
+    ],
+    "width": "100%"
+}

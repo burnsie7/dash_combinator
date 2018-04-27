@@ -1,0 +1,187 @@
+{
+    "board_title": "AWS Lambda - SWGF", 
+    "description": "", 
+    "template_variables": [
+        {
+            "default": "*", 
+            "name": "function", 
+            "prefix": "functionname"
+        }, 
+        {
+            "default": "*", 
+            "name": "region", 
+            "prefix": "region"
+        }
+    ], 
+    "widgets": [
+        {
+            "board_id": 100273, 
+            "height": 12, 
+            "margin": "", 
+            "sizing": "fit", 
+            "title": true, 
+            "title_align": "left", 
+            "title_size": 16, 
+            "title_text": "", 
+            "type": "image", 
+            "url": "/static/images/screenboard/integrations/amazon_lambda.png", 
+            "width": 21, 
+            "x": 0, 
+            "y": 0
+        }, 
+        {
+            "board_id": 100273, 
+            "height": 13, 
+            "legend": false, 
+            "legend_size": "0", 
+            "tile_def": {
+                "requests": [
+                    {
+                        "aggregator": "avg", 
+                        "conditional_formats": [], 
+                        "q": "avg:aws.lambda.duration.sum{$function} by {functionname}", 
+                        "type": "line"
+                    }
+                ], 
+                "viz": "timeseries"
+            }, 
+            "timeframe": "1d", 
+            "title": true, 
+            "title_align": "left", 
+            "title_size": 16, 
+            "title_text": "Execution duration by function", 
+            "type": "timeseries", 
+            "width": 47, 
+            "x": 22, 
+            "y": 23
+        }, 
+        {
+            "aggr": "sum", 
+            "aggregator": "min", 
+            "autoscale": true, 
+            "calc_func": "raw", 
+            "conditional_formats": [
+                {
+                    "comparator": ">", 
+                    "custom_bg_color": null, 
+                    "custom_fg_color": null, 
+                    "invert": false, 
+                    "palette": "green_on_white", 
+                    "value": 0
+                }, 
+                {
+                    "comparator": "<=", 
+                    "custom_bg_color": null, 
+                    "custom_fg_color": null, 
+                    "invert": false, 
+                    "palette": "red_on_white", 
+                    "value": 0
+                }
+            ], 
+            "custom_unit": null, 
+            "height": 8, 
+            "isShared": false, 
+            "is_valid_query": true, 
+            "legend": false, 
+            "legend_size": "0", 
+            "metric": "aws.elb.healthy_host_count", 
+            "metric_type": "standard", 
+            "precision": 0, 
+            "query": "sum:aws.elb.healthy_host_count{$scope}", 
+            "res_calc_func": "raw", 
+            "tags": [
+                "$scope"
+            ], 
+            "text_align": "center", 
+            "text_size": "auto", 
+            "tile_def": {
+                "autoscale": true, 
+                "custom_unit": null, 
+                "precision": 0, 
+                "requests": [
+                    {
+                        "aggregator": "min", 
+                        "conditional_formats": [
+                            {
+                                "comparator": ">", 
+                                "custom_bg_color": null, 
+                                "custom_fg_color": null, 
+                                "invert": false, 
+                                "palette": "green_on_white", 
+                                "value": 0
+                            }, 
+                            {
+                                "comparator": "<=", 
+                                "custom_bg_color": null, 
+                                "custom_fg_color": null, 
+                                "invert": false, 
+                                "palette": "red_on_white", 
+                                "value": 0
+                            }
+                        ], 
+                        "q": "sum:aws.applicationelb.healthy_host_count{$region,$availability_zone,$env,$alb_target_group,$alb_name}"
+                    }
+                ], 
+                "text_align": "left", 
+                "viz": "query_value"
+            }, 
+            "timeframe": "1h", 
+            "title": true, 
+            "title_align": "left", 
+            "title_size": 13, 
+            "title_text": "Healthy hosts count (min)", 
+            "type": "query_value", 
+            "width": 13, 
+            "x": 82, 
+            "y": 0
+        }, 
+        {
+            "board_id": 33142, 
+            "height": 10, 
+            "isShared": false, 
+            "margin": "", 
+            "sizing": "fit", 
+            "title": true, 
+            "title_align": "left", 
+            "title_size": 16, 
+            "title_text": "", 
+            "type": "image", 
+            "url": "/static/images/saas_logos/bot/amazon_alb.png", 
+            "width": 13, 
+            "x": 69, 
+            "y": 0
+        }, 
+        {
+            "board_id": 33142, 
+            "height": 13, 
+            "isShared": false, 
+            "legend": false, 
+            "legend_size": "0", 
+            "tile_def": {
+                "autoscale": true, 
+                "requests": [
+                    {
+                        "aggregator": "avg", 
+                        "conditional_formats": [], 
+                        "q": "sum:aws.applicationelb.httpcode_target_2xx{$region,$availability_zone,$env,$alb_target_group,$alb_name} by {host}.as_count()", 
+                        "style": {
+                            "palette": "dog_classic"
+                        }, 
+                        "type": "bars"
+                    }
+                ], 
+                "viz": "timeseries"
+            }, 
+            "timeframe": "4h", 
+            "title": true, 
+            "title_align": "left", 
+            "title_size": 16, 
+            "title_text": "HTTP 2xx Responses", 
+            "type": "timeseries", 
+            "width": 39, 
+            "x": 108, 
+            "y": 10
+        }
+    ], 
+    "width": "100%"
+}
