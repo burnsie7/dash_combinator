@@ -8,9 +8,9 @@ from datadog import initialize, api
 
 '''Example usage:
 Convert dash to json:
-python dash_to_json.py get -d 214520 -a your_api_key_here -p your_app_key_here
+python dash_to_json.py get -d 214520 -t screenboard -a your_api_key_here -p your_app_key_here
 Convert dash to json, specifying output file:
-python dash_to_json.py get -d 214520 -f my_screenboard.json -a your_api_key_here -p your_app_key_here
+python dash_to_json.py get -d 214520 t screenboard -f my_screenboard.json -a your_api_key_here -p your_app_key_here
 Create dash from json file:
 python dash_to_json.py create -f my_timeboard.json -a your_api_key_here -p your_app_key_here'''
 
@@ -72,6 +72,7 @@ def print_error(msg):
 if __name__ == '__main__':
     parser = ArgumentParser(description='Download dashboard as JSON and create new Dash from JSON')
     parser.add_argument('action', help='Either get or create')
+    parser.add_argument('-t', help='Dashboard type.  Either screenboard or timeboard', required=True)
     parser.add_argument('-d', help='The dashboard ID', required=False)
     parser.add_argument('-f', help='file_name', required=False)
     parser.add_argument('-a', help='Datadog API key', required=False)
@@ -84,6 +85,7 @@ if __name__ == '__main__':
     app_key = args.p if args.p else os.environ.get('DD_APP_KEY'),
     file_name = args.f
     dash_id = args.d
+    dash_type = args.t
 
     #api_key[0] if isinstance(api_key, tuple) else api_key
     #app_key[0] if isinstance(app_key, tuple) else app_key
@@ -106,20 +108,22 @@ if __name__ == '__main__':
 
         if not dash_id:
             print_error("Specify a dashboard id using --d if you are using action: get")
-
-        try:
-            res = api.Timeboard.get(dash_id)
-            board = res['dash']
-            board_type = "timeboard"
-        except:
-            pass
-
-        if 'errors' in board or not board:
+        if dash_type.lower() == 'timeboard':
+            try:
+                res = api.Timeboard.get(dash_id)
+                board = res['dash']
+                board_type = "timeboard"
+            except:
+                pass
+        elif dash_type.lower() == 'screenboard':
             try:
                 board = api.Screenboard.get(dash_id)
                 board_type = "screenboard"
             except:
                 pass
+        else:
+            print_error("Must specify either 'timeboard' or 'screenboard' using -t")
+            exit()
 
         print "Dashboard {} is a {}...".format(dash_id, board_type)
 

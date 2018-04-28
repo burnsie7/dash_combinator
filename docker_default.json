@@ -1,0 +1,691 @@
+{
+    "board_title": "Docker [bbd]",
+    "description": "",
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "scope",
+            "prefix": null
+        }
+    ],
+    "widgets": [
+        {
+            "height": 27,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "events": [],
+                "requests": [
+                    {
+                        "q": "sum:docker.containers.running{$scope} by {docker_image}.fill(0)",
+                        "type": "bars"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Running containers by image",
+            "type": "timeseries",
+            "width": 50,
+            "x": 68,
+            "y": 10
+        },
+        {
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(avg:docker.mem.rss{$scope} by {container_name}, 5, 'max', 'desc')",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Most RAM-intensive containers",
+            "type": "toplist",
+            "width": 51,
+            "x": 52,
+            "y": 98
+        },
+        {
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(avg:docker.cpu.user{$scope} by {container_name}, 5, 'max', 'desc')",
+                        "style": {
+                            "palette": "cool"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Most CPU-intensive containers",
+            "type": "timeseries",
+            "width": 51,
+            "x": 0,
+            "y": 82
+        },
+        {
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "events": [],
+                "requests": [
+                    {
+                        "q": "avg:docker.mem.rss{$scope} by {container_name}",
+                        "type": "area"
+                    }
+                ],
+                "viz": "heatmap"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Memory by container",
+            "type": "timeseries",
+            "width": 51,
+            "x": 52,
+            "y": 114
+        },
+        {
+            "aggr": "sum",
+            "aggregator": "last",
+            "calc_func": "raw",
+            "conditional_formats": [],
+            "height": 7,
+            "is_valid_query": true,
+            "metric": "docker.containers.running",
+            "metric_type": "standard",
+            "precision": 0,
+            "query": "sum:docker.containers.running{$scope}",
+            "res_calc_func": "raw",
+            "tags": [
+                "$scope"
+            ],
+            "text_align": "center",
+            "text_size": "auto",
+            "timeframe": "1m",
+            "title": true,
+            "title_align": "center",
+            "title_size": 16,
+            "title_text": "Running containers",
+            "type": "query_value",
+            "unit": "auto",
+            "width": 14,
+            "x": 89,
+            "y": 0
+        },
+        {
+            "aggr": "sum",
+            "aggregator": "last",
+            "calc_func": "raw",
+            "conditional_formats": [],
+            "height": 7,
+            "is_valid_query": true,
+            "metric": "docker.containers.stopped",
+            "metric_type": "standard",
+            "precision": 0,
+            "query": "sum:docker.containers.stopped{$scope}",
+            "res_calc_func": "raw",
+            "tags": [
+                "$scope"
+            ],
+            "text_align": "center",
+            "text_size": "auto",
+            "timeframe": "1m",
+            "title": true,
+            "title_align": "center",
+            "title_size": 16,
+            "title_text": "Stopped containers",
+            "type": "query_value",
+            "unit": "auto",
+            "width": 14,
+            "x": 104,
+            "y": 0
+        },
+        {
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "events": [],
+                "requests": [
+                    {
+                        "q": "avg:docker.cpu.user{$scope} by {container_name}",
+                        "type": "area"
+                    }
+                ],
+                "viz": "heatmap"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "CPU by container",
+            "type": "timeseries",
+            "width": 51,
+            "x": 0,
+            "y": 98
+        },
+        {
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "q": "avg:docker.cpu.user{$scope} by {docker_image}.fill(0)",
+                        "style": {
+                            "palette": "cool"
+                        },
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "CPU user by image",
+            "type": "timeseries",
+            "width": 51,
+            "x": 0,
+            "y": 50
+        },
+        {
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "q": "avg:docker.mem.rss{$scope} by {docker_image}.fill(0)",
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "RSS memory by image",
+            "type": "timeseries",
+            "width": 51,
+            "x": 52,
+            "y": 50
+        },
+        {
+            "event_size": "s",
+            "height": 22,
+            "query": "sources:docker",
+            "timeframe": "1d",
+            "title": false,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "event_stream",
+            "width": 51,
+            "x": 0,
+            "y": 17
+        },
+        {
+            "height": 9,
+            "query": "sources:docker",
+            "timeframe": "1d",
+            "title": false,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "event_timeline",
+            "width": 51,
+            "x": 0,
+            "y": 8
+        },
+        {
+            "aggr": "avg",
+            "aggregator": "last",
+            "calc_func": "raw",
+            "conditional_formats": [
+                {
+                    "color": "white_on_green",
+                    "comparator": ">=",
+                    "custom_bg_color": null,
+                    "custom_fg_color": null,
+                    "invert": false,
+                    "value": 80
+                },
+                {
+                    "color": "white_on_yellow",
+                    "comparator": ">",
+                    "custom_bg_color": null,
+                    "custom_fg_color": null,
+                    "invert": false,
+                    "value": 50
+                },
+                {
+                    "color": "white_on_red",
+                    "comparator": ">=",
+                    "custom_bg_color": null,
+                    "custom_fg_color": null,
+                    "invert": false,
+                    "value": 0
+                }
+            ],
+            "height": 7,
+            "is_valid_query": false,
+            "metric": "",
+            "metric_type": "standard",
+            "precision": 0,
+            "query": "100*(sum:docker.containers.running{$scope}/timeshift(sum:docker.containers.running{$scope}, -300))",
+            "res_calc_func": "raw",
+            "tags": [],
+            "text_align": "center",
+            "text_size": "auto",
+            "timeframe": "5m",
+            "title": true,
+            "title_align": "center",
+            "title_size": 16,
+            "title_text": "Running container change",
+            "type": "query_value",
+            "unit": "%",
+            "width": 20,
+            "x": 68,
+            "y": 0
+        },
+        {
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "q": "avg:docker.cpu.system{$scope} by {docker_image}.fill(0)",
+                        "style": {
+                            "palette": "cool"
+                        },
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "CPU system by image",
+            "type": "timeseries",
+            "width": 51,
+            "x": 0,
+            "y": 66
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "blue",
+            "font_size": "24",
+            "height": 39,
+            "html": "\n\n\n\nContainers",
+            "refresh_every": 30000,
+            "text_align": "center",
+            "tick": true,
+            "tick_edge": "right",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 14,
+            "x": 52,
+            "y": 0
+        },
+        {
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "q": "sum:docker.mem.cache{$scope} by {docker_image}",
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Cache memory by image",
+            "type": "timeseries",
+            "width": 51,
+            "x": 52,
+            "y": 82
+        },
+        {
+            "board_id": 43124,
+            "height": 8,
+            "margin": "",
+            "sizing": "fit",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "image",
+            "url": "/static/images/screenboard/integrations/docker-logo-792x269.png",
+            "width": 51,
+            "x": 0,
+            "y": 0
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "blue",
+            "font_size": "24",
+            "height": 6,
+            "html": "[CPU Core Load](https://www.datadoghq.com/blog/how-to-monitor-docker-resource-metrics/#toc2)",
+            "refresh_every": 30000,
+            "text_align": "center",
+            "tick": true,
+            "tick_edge": "bottom",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 51,
+            "x": 0,
+            "y": 42
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "blue",
+            "font_size": "24",
+            "height": 6,
+            "html": "Memory",
+            "refresh_every": 30000,
+            "text_align": "center",
+            "tick": true,
+            "tick_edge": "bottom",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 51,
+            "x": 52,
+            "y": 42
+        },
+        {
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "q": "avg:docker.mem.swap{$scope} by {docker_image}",
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Swap by image",
+            "type": "timeseries",
+            "width": 51,
+            "x": 52,
+            "y": 66
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "blue",
+            "font_size": "24",
+            "height": 6,
+            "html": "I/O",
+            "refresh_every": 30000,
+            "text_align": "center",
+            "tick": true,
+            "tick_edge": "bottom",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 51,
+            "x": 156,
+            "y": 42
+        },
+        {
+            "board_id": 43124,
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "q": "avg:docker.io.read_bytes{$scope} by {docker_image}",
+                        "style": {
+                            "palette": "dog_classic"
+                        },
+                        "type": "area"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Avg. I/O bytes read by image",
+            "type": "timeseries",
+            "width": 51,
+            "x": 156,
+            "y": 50
+        },
+        {
+            "board_id": 43124,
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "q": "avg:docker.io.write_bytes{$scope} by {docker_image}",
+                        "style": {
+                            "palette": "dog_classic"
+                        },
+                        "type": "area"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Avg. I/O bytes written by image",
+            "type": "timeseries",
+            "width": 51,
+            "x": 156,
+            "y": 66
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "blue",
+            "font_size": "24",
+            "height": 6,
+            "html": "Network",
+            "refresh_every": 30000,
+            "text_align": "center",
+            "tick": true,
+            "tick_edge": "bottom",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 51,
+            "x": 104,
+            "y": 42
+        },
+        {
+            "board_id": 43124,
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "q": "avg:docker.net.bytes_rcvd{$scope} by {docker_image}",
+                        "style": {
+                            "palette": "cool"
+                        },
+                        "type": "area"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Avg. rx bytes by image",
+            "type": "timeseries",
+            "width": 51,
+            "x": 104,
+            "y": 50
+        },
+        {
+            "board_id": 43124,
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "q": "avg:docker.net.bytes_sent{$scope} by {docker_image}",
+                        "style": {
+                            "palette": "purple"
+                        },
+                        "type": "area"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Avg. tx bytes by image",
+            "type": "timeseries",
+            "width": 51,
+            "x": 104,
+            "y": 66
+        },
+        {
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(avg:docker.net.bytes_sent{$scope} by {container_name}, 5, 'max', 'desc')",
+                        "style": {
+                            "palette": "purple"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Most tx-intensive containers",
+            "type": "toplist",
+            "width": 51,
+            "x": 104,
+            "y": 82
+        },
+        {
+            "height": 13,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "q": "avg:docker.net.bytes_sent{$scope} by {container_name}",
+                        "type": "area"
+                    }
+                ],
+                "viz": "heatmap"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "tx by container",
+            "type": "timeseries",
+            "width": 51,
+            "x": 104,
+            "y": 98
+        },
+        {
+            "height": 37,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "timeshift(top(sum:docker.containers.running{$scope} by {docker_image}.fill(0), 20, 'last', 'desc'),40)",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Running containers by image",
+            "type": "timeseries",
+            "width": 36,
+            "x": 119,
+            "y": 0
+        }
+    ],
+    "width": "100%"
+}

@@ -3,8 +3,8 @@ import sys
 
 from pprint import pprint
 
-source_dash = json.load(open('ds/test_source.json'))
-new_dash = json.load(open('ds/test_new.json'))
+source_dash = json.load(open('jenkins_orig.json'))
+new_dash = json.load(open('docker_default.json'))
 
 source_widgets = source_dash['widgets']
 new_widgets = new_dash['widgets']
@@ -82,5 +82,5 @@ def update_x(widgets, x):
 source_max_x = get_max_x(source_widgets)
 update_x(new_widgets, source_max_x)
 cloned_widgets = export_widgets(new_widgets)
-combine_and_export(cloned_widgets, 'test_export.json')
+combine_and_export(cloned_widgets, 'jenkdocker.json')
 

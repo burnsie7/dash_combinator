@@ -1,0 +1,1076 @@
+{
+    "board_title": "CD / CI Screenboard [bbd]",
+    "description": "",
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "job",
+            "prefix": "job"
+        },
+        {
+            "default": "account:demo3",
+            "name": "account",
+            "prefix": "account"
+        }
+    ],
+    "widgets": [
+        {
+            "board_id": 51223,
+            "height": 7,
+            "isShared": false,
+            "margin": "",
+            "sizing": "fit",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "image",
+            "url": "/static/images/screenboard/integrations/jenkins.png",
+            "width": 14,
+            "x": 0,
+            "y": 0
+        },
+        {
+            "board_id": 51223,
+            "event_size": "s",
+            "global_timeframe_controls": false,
+            "height": 54,
+            "isShared": false,
+            "query": "sources:jenkins,ansible hosts:fse-ldmx-f7-18 ",
+            "tags_execution": "and",
+            "timeframe": "1w",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Event Stream",
+            "type": "event_stream",
+            "width": 43,
+            "x": 44,
+            "y": 32
+        },
+        {
+            "board_id": 51223,
+            "height": 28,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(avg:jenkins.job.duration{$job} by {job}, 5, 'mean', 'desc')",
+                        "style": {
+                            "palette": "purple"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Average job durations",
+            "type": "timeseries",
+            "width": 43,
+            "x": 0,
+            "y": 58
+        },
+        {
+            "aggr": "avg",
+            "aggregator": "sum",
+            "autoscale": true,
+            "board_id": 51223,
+            "calc_func": "raw",
+            "conditional_formats": [],
+            "custom_unit": null,
+            "height": 5,
+            "isShared": false,
+            "is_valid_query": true,
+            "legend": false,
+            "legend_size": "0",
+            "metric": "",
+            "metric_type": "standard",
+            "padding": 8,
+            "precision": 2,
+            "query": "sum:jenkins.job.duration{$job}",
+            "res_calc_func": "raw",
+            "tags": [],
+            "text_align": "left",
+            "tile_def": {
+                "autoscale": false,
+                "custom_unit": null,
+                "precision": "0",
+                "requests": [
+                    {
+                        "aggregator": "sum",
+                        "conditional_formats": [],
+                        "q": "sum:jenkins.job.duration{$job}",
+                        "style": {
+                            "palette": "dog_classic",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": null
+                    }
+                ],
+                "text_align": "center",
+                "viz": "query_value"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Compute Time Past Hour",
+            "type": "query_value",
+            "width": 14,
+            "wrapped": true,
+            "x": 29,
+            "y": 0
+        },
+        {
+            "board_id": 51223,
+            "height": 9,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "count_not_null(sum:jenkins.job.duration{$job,result:success} by {job}), count_not_null(sum:jenkins.job.duration{$job,result:failure} by {job})",
+                        "style": {
+                            "palette": "green",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "bars"
+                    },
+                    {
+                        "q": "count_not_null(sum:jenkins.job.duration{$job,result:failure} by {job})",
+                        "style": {
+                            "palette": "red",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "bars"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Jenkins Jobs by Status",
+            "type": "timeseries",
+            "width": 43,
+            "x": 0,
+            "y": 20
+        },
+        {
+            "aggr": "avg",
+            "aggregator": "sum",
+            "autoscale": true,
+            "board_id": 51223,
+            "calc_func": "raw",
+            "conditional_formats": [],
+            "custom_unit": null,
+            "height": 5,
+            "isShared": false,
+            "is_valid_query": true,
+            "legend": false,
+            "legend_size": "0",
+            "metric": "",
+            "metric_type": "standard",
+            "padding": 8,
+            "precision": 2,
+            "query": "sum:jenkins.job.duration{$job}",
+            "res_calc_func": "raw",
+            "tags": [],
+            "text_align": "left",
+            "tile_def": {
+                "autoscale": false,
+                "custom_unit": null,
+                "precision": "0",
+                "requests": [
+                    {
+                        "aggregator": "sum",
+                        "conditional_formats": [],
+                        "q": "sum:jenkins.job.duration{$job}",
+                        "style": {
+                            "palette": "dog_classic",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": null
+                    }
+                ],
+                "text_align": "center",
+                "viz": "query_value"
+            },
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Compute Time Past Day",
+            "type": "query_value",
+            "width": 13,
+            "wrapped": true,
+            "x": 15,
+            "y": 0
+        },
+        {
+            "board_id": 93575,
+            "check": "jenkins.job.status",
+            "group": "app:fse-db,env:staging,job:fse-db-staging,host:fse-ldmx-f7-18",
+            "group_by": [],
+            "grouping": "cluster",
+            "height": 11,
+            "isShared": false,
+            "tags": [
+                "$job"
+            ],
+            "text_align": "center",
+            "text_size": "auto",
+            "timeframe": "1d",
+            "title": true,
+            "title_align": "center",
+            "title_size": 13,
+            "title_text": "Passing and failing Jenkins jobs, past day",
+            "type": "check_status",
+            "width": 43,
+            "x": 0,
+            "y": 8
+        },
+        {
+            "board_id": 93575,
+            "height": 10,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "robust_trend(avg:jenkins.job.duration{$job} by {job})",
+                        "style": {
+                            "palette": "dog_classic",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries",
+                "yaxis": {
+                    "min": 0
+                }
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Job duration trends",
+            "type": "timeseries",
+            "width": 43,
+            "x": 0,
+            "y": 45
+        },
+        {
+            "board_id": 328079,
+            "height": 10,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "sum:jenkins.queue.size{*}",
+                        "style": {
+                            "palette": "dog_classic",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "bars"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Queue Length",
+            "type": "timeseries",
+            "width": 43,
+            "x": 0,
+            "y": 32
+        },
+        {
+            "board_id": 328079,
+            "height": 9,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:ansible.task.unreachable{host:fse-ldmx-f7-18}",
+                        "style": {
+                            "palette": "dog_classic",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "bars"
+                    },
+                    {
+                        "q": "avg:ansible.task.skipped{host:fse-ldmx-f7-18}",
+                        "style": {
+                            "palette": "dog_classic",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "bars"
+                    },
+                    {
+                        "q": "avg:ansible.task.ok{host:fse-ldmx-f7-18}",
+                        "style": {
+                            "palette": "dog_classic",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "bars"
+                    },
+                    {
+                        "q": "avg:ansible.task.failures{host:fse-ldmx-f7-18}",
+                        "style": {
+                            "palette": "dog_classic",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "bars"
+                    },
+                    {
+                        "q": "avg:ansible.task.changed{host:fse-ldmx-f7-18}",
+                        "style": {
+                            "palette": "dog_classic",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "bars"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Ansible Tasks by Status",
+            "type": "timeseries",
+            "width": 43,
+            "x": 44,
+            "y": 8
+        },
+        {
+            "board_id": 328079,
+            "height": 9,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:ansible.elapsed_time{playbook:appserver-web-update}",
+                        "style": {
+                            "palette": "dog_classic",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "area"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Ansible Elapsed Time",
+            "type": "timeseries",
+            "width": 43,
+            "x": 44,
+            "y": 20
+        },
+        {
+            "height": 13,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "events": [],
+                "requests": [
+                    {
+                        "q": "sum:docker.containers.running{$account,$account} by {docker_image}.fill(0)",
+                        "type": "bars"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Running containers by image",
+            "type": "timeseries",
+            "width": 51,
+            "x": 88,
+            "y": 73
+        },
+        {
+            "height": 20,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(avg:docker.mem.rss{$account,$account} by {container_name}, 5, 'max', 'desc')",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Most RAM-intensive containers",
+            "type": "toplist",
+            "width": 51,
+            "x": 192,
+            "y": 18
+        },
+        {
+            "height": 20,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(avg:docker.cpu.user{$account,$account} by {container_name}, 5, 'max', 'desc')",
+                        "style": {
+                            "palette": "cool"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Most CPU-intensive containers",
+            "type": "timeseries",
+            "width": 51,
+            "x": 140,
+            "y": 18
+        },
+        {
+            "height": 13,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "events": [],
+                "requests": [
+                    {
+                        "q": "avg:docker.mem.rss{$account,$account} by {container_name}",
+                        "type": "area"
+                    }
+                ],
+                "viz": "heatmap"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Memory by container",
+            "type": "timeseries",
+            "width": 51,
+            "x": 192,
+            "y": 41
+        },
+        {
+            "aggr": "sum",
+            "aggregator": "last",
+            "autoscale": true,
+            "calc_func": "raw",
+            "conditional_formats": [],
+            "custom_unit": null,
+            "height": 5,
+            "isShared": false,
+            "is_valid_query": true,
+            "metric": "docker.containers.running",
+            "metric_type": "standard",
+            "precision": 0,
+            "query": "sum:docker.containers.running{$account}",
+            "res_calc_func": "raw",
+            "tags": [
+                "$account"
+            ],
+            "text_align": "center",
+            "text_size": "auto",
+            "tile_def": {
+                "autoscale": true,
+                "custom_unit": null,
+                "precision": 0,
+                "requests": [
+                    {
+                        "aggregator": "last",
+                        "conditional_formats": [],
+                        "q": "sum:docker.containers.running{$account,$account}"
+                    }
+                ],
+                "text_align": "center",
+                "viz": "query_value"
+            },
+            "timeframe": "1m",
+            "title": true,
+            "title_align": "center",
+            "title_size": 16,
+            "title_text": "Running containers",
+            "type": "query_value",
+            "width": 18,
+            "x": 101,
+            "y": 0
+        },
+        {
+            "aggr": "sum",
+            "aggregator": "last",
+            "autoscale": true,
+            "calc_func": "raw",
+            "conditional_formats": [],
+            "custom_unit": null,
+            "height": 5,
+            "isShared": false,
+            "is_valid_query": true,
+            "metric": "docker.containers.stopped",
+            "metric_type": "standard",
+            "precision": 0,
+            "query": "sum:docker.containers.stopped{$account}",
+            "res_calc_func": "raw",
+            "tags": [
+                "$account"
+            ],
+            "text_align": "center",
+            "text_size": "auto",
+            "tile_def": {
+                "autoscale": true,
+                "custom_unit": null,
+                "precision": 0,
+                "requests": [
+                    {
+                        "aggregator": "last",
+                        "conditional_formats": [],
+                        "q": "sum:docker.containers.stopped{$account,$account}"
+                    }
+                ],
+                "text_align": "center",
+                "viz": "query_value"
+            },
+            "timeframe": "1m",
+            "title": true,
+            "title_align": "center",
+            "title_size": 16,
+            "title_text": "Stopped containers",
+            "type": "query_value",
+            "width": 19,
+            "x": 120,
+            "y": 0
+        },
+        {
+            "height": 13,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:docker.cpu.user{$account,$account} by {container_name}",
+                        "style": {
+                            "palette": "dog_classic",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "area"
+                    }
+                ],
+                "viz": "heatmap"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "CPU by container",
+            "type": "timeseries",
+            "width": 51,
+            "x": 140,
+            "y": 41
+        },
+        {
+            "height": 15,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "events": [
+                    {
+                        "q": "sources:jenkins,ansible hosts:fse-ldmx-f7-18 ",
+                        "tags_execution": "and"
+                    }
+                ],
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "avg:docker.cpu.user{$account,$account} by {docker_image}.fill(0)",
+                        "style": {
+                            "palette": "cool",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "CPU user by image",
+            "type": "timeseries",
+            "width": 51,
+            "x": 140,
+            "y": 0
+        },
+        {
+            "height": 15,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "events": [
+                    {
+                        "q": "sources:jenkins,ansible hosts:fse-ldmx-f7-18 ",
+                        "tags_execution": "and"
+                    }
+                ],
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "avg:docker.mem.rss{$account,$account} by {docker_image}.fill(0)",
+                        "style": {
+                            "palette": "dog_classic",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "RSS memory by image",
+            "type": "timeseries",
+            "width": 51,
+            "x": 192,
+            "y": 0
+        },
+        {
+            "event_size": "s",
+            "global_timeframe_controls": false,
+            "height": 22,
+            "isShared": false,
+            "query": "sources:docker $account",
+            "tags_execution": "and",
+            "timeframe": "1d",
+            "title": false,
+            "type": "event_stream",
+            "width": 51,
+            "x": 88,
+            "y": 18
+        },
+        {
+            "global_timeframe_controls": false,
+            "height": 9,
+            "isShared": false,
+            "query": "sources:docker $account",
+            "tags_execution": "and",
+            "timeframe": "1d",
+            "title": false,
+            "type": "event_timeline",
+            "width": 51,
+            "x": 88,
+            "y": 8
+        },
+        {
+            "board_id": 43124,
+            "height": 7,
+            "isShared": false,
+            "margin": "",
+            "sizing": "fit",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "image",
+            "url": "/static/images/screenboard/integrations/docker-logo-792x269.png",
+            "width": 12,
+            "x": 88,
+            "y": 0
+        },
+        {
+            "board_id": 43124,
+            "height": 13,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:docker.io.read_bytes{$account,$account} by {docker_image}",
+                        "style": {
+                            "palette": "dog_classic",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "area"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Avg. I/O bytes read by image",
+            "type": "timeseries",
+            "width": 51,
+            "x": 140,
+            "y": 57
+        },
+        {
+            "height": 13,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:docker.net.bytes_rcvd{$account} by {docker_image}",
+                        "style": {
+                            "palette": "cool",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "area"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Avg. rx bytes by image",
+            "type": "timeseries",
+            "width": 51,
+            "x": 140,
+            "y": 73
+        },
+        {
+            "height": 29,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "timeshift(top(sum:docker.containers.running{$account,$account} by {docker_image}.fill(0), 20, 'last', 'desc'), 40)",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Running containers by image",
+            "type": "timeseries",
+            "width": 51,
+            "x": 88,
+            "y": 41
+        },
+        {
+            "board_id": 329358,
+            "height": 13,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:docker.io.write_bytes{$account} by {docker_image}",
+                        "style": {
+                            "palette": "dog_classic",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "area"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Avg. I/O bytes write by image",
+            "type": "timeseries",
+            "width": 51,
+            "x": 192,
+            "y": 57
+        },
+        {
+            "board_id": 329358,
+            "height": 13,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:docker.net.bytes_sent{$account} by {docker_image}",
+                        "style": {
+                            "palette": "purple",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "area"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Avg. tx bytes by image",
+            "type": "timeseries",
+            "width": 51,
+            "x": 192,
+            "y": 73
+        },
+        {
+            "board_id": 329358,
+            "height": 7,
+            "isShared": false,
+            "margin": "",
+            "sizing": "fit",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "image",
+            "url": "/static/images/saas_logos/bot/ansible.png",
+            "width": 13,
+            "x": 44,
+            "y": 0
+        },
+        {
+            "autoscale": true,
+            "board_id": 329358,
+            "height": 5,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": false,
+                "custom_unit": "%",
+                "precision": 0,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [
+                            {
+                                "comparator": ">",
+                                "custom_bg_color": null,
+                                "custom_fg_color": null,
+                                "invert": false,
+                                "palette": "white_on_green",
+                                "value": 1
+                            },
+                            {
+                                "comparator": "<=",
+                                "custom_bg_color": null,
+                                "custom_fg_color": null,
+                                "invert": false,
+                                "palette": "white_on_yellow",
+                                "value": 25
+                            },
+                            {
+                                "comparator": ">=",
+                                "custom_bg_color": null,
+                                "custom_fg_color": null,
+                                "invert": false,
+                                "palette": "white_on_red",
+                                "value": 50
+                            }
+                        ],
+                        "q": "100*(sum:ansible.task.changed{host:fse-ldmx-f7-18}/(sum:ansible.task.changed{host:fse-ldmx-f7-18}+sum:ansible.task.ok{host:fse-ldmx-f7-18}+sum:ansible.task.skipped{host:fse-ldmx-f7-18}+sum:ansible.task.failures{host:fse-ldmx-f7-18}+sum:ansible.task.unreachable{host:fse-ldmx-f7-18}))",
+                        "style": {
+                            "palette": "dog_classic",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": null
+                    }
+                ],
+                "text_align": "center",
+                "viz": "query_value"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Tasks Changed (%)",
+            "type": "query_value",
+            "width": 14,
+            "x": 58,
+            "y": 0
+        },
+        {
+            "autoscale": true,
+            "board_id": 329358,
+            "height": 5,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": false,
+                "custom_unit": "sec",
+                "precision": 0,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [
+                            {
+                                "comparator": "<=",
+                                "custom_bg_color": null,
+                                "custom_fg_color": null,
+                                "invert": false,
+                                "palette": "white_on_green",
+                                "value": 60
+                            },
+                            {
+                                "comparator": "<=",
+                                "custom_bg_color": null,
+                                "custom_fg_color": null,
+                                "invert": false,
+                                "palette": "green_on_white",
+                                "value": 120
+                            },
+                            {
+                                "comparator": "<=",
+                                "custom_bg_color": null,
+                                "custom_fg_color": null,
+                                "invert": false,
+                                "palette": "white_on_yellow",
+                                "value": 300
+                            },
+                            {
+                                "comparator": "<=",
+                                "custom_bg_color": null,
+                                "custom_fg_color": null,
+                                "invert": false,
+                                "palette": "red_on_white",
+                                "value": 600
+                            },
+                            {
+                                "comparator": ">",
+                                "custom_bg_color": null,
+                                "custom_fg_color": null,
+                                "invert": false,
+                                "palette": "white_on_red",
+                                "value": 600
+                            }
+                        ],
+                        "q": "avg:ansible.elapsed_time{*}",
+                        "style": {
+                            "palette": "dog_classic",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": null
+                    }
+                ],
+                "text_align": "center",
+                "viz": "query_value"
+            },
+            "timeframe": "1h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Avg Execution Time",
+            "type": "query_value",
+            "width": 14,
+            "x": 73,
+            "y": 0
+        }
+    ],
+    "width": "100%"
+}
