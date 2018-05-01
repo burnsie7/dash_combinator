@@ -1,0 +1,290 @@
+{
+    "board_title": "Kubernetes [bbd]",
+    "description": "",
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "scope",
+            "prefix": null
+        },
+        {
+            "default": "*",
+            "name": "kube_namespace",
+            "prefix": "kube_namespace"
+        },
+        {
+            "default": "*",
+            "name": "kube_deployment",
+            "prefix": "kube_deployment"
+        },
+        {
+            "default": "*",
+            "name": "node",
+            "prefix": "node"
+        },
+        {
+            "default": "*",
+            "name": "label",
+            "prefix": "label"
+        },
+        {
+            "default": "*",
+            "name": "k8s_state_namespace",
+            "prefix": "namespace"
+        },
+        {
+            "default": "*",
+            "name": "k8s_state_deployment",
+            "prefix": "deployment"
+        }
+    ],
+    "widgets": [
+        {
+            "height": 16,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "sum:docker.containers.running{$scope,$node,$label} by {pod_name}.fill(0)",
+                        "type": "bars"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Running containers by pod",
+            "type": "timeseries",
+            "width": 44,
+            "x": 150,
+            "y": 1
+        },
+        {
+            "height": 22,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(sum:kubernetes.memory.usage{$scope,$node,$label,$kube_namespace,$kube_deployment, !pod_name:no_pod} by {pod_name}, 10, 'mean', 'desc')",
+                        "style": {
+                            "palette": "cool"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Most memory-intensive pods",
+            "type": "toplist",
+            "width": 43,
+            "x": 151,
+            "y": 61
+        },
+        {
+            "height": 22,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(sum:kubernetes.cpu.usage.total{$scope,$node,$label,$kube_namespace,$kube_deployment, !pod_name:no_pod} by {pod_name}, 10, 'mean', 'desc')",
+                        "style": {
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "viz": "toplist"
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Most CPU-intensive pods",
+            "type": "timeseries",
+            "width": 43,
+            "x": 107,
+            "y": 61
+        },
+        {
+            "aggr": "sum",
+            "aggregator": "avg",
+            "autoscale": true,
+            "calc_func": "raw",
+            "conditional_formats": [],
+            "custom_unit": null,
+            "height": 12,
+            "is_valid_query": true,
+            "legend": false,
+            "legend_size": "0",
+            "metric": "docker.containers.running",
+            "metric_type": "standard",
+            "precision": 0,
+            "query": "sum:docker.containers.running{$scope,$pod,$replication_controller,$namespace}",
+            "res_calc_func": "raw",
+            "tags": [
+                "$scope",
+                "$pod"
+            ],
+            "text_align": "center",
+            "text_size": "auto",
+            "tile_def": {
+                "autoscale": true,
+                "custom_unit": null,
+                "precision": "0",
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [
+                            {
+                                "comparator": ">",
+                                "palette": "green_on_white",
+                                "value": "0"
+                            }
+                        ],
+                        "q": "sum:docker.containers.running{$scope,$node,$label}"
+                    }
+                ],
+                "text_align": "center",
+                "viz": "query_value"
+            },
+            "timeframe": "5m",
+            "title": true,
+            "title_align": "center",
+            "title_size": 13,
+            "title_text": "Running containers",
+            "type": "query_value",
+            "width": 16,
+            "x": 107,
+            "y": 3
+        },
+        {
+            "board_id": 134088,
+            "height": 12,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:kubernetes_state.deployment.replicas_unavailable{$scope,$node,$label,$k8s_state_namespace,$k8s_state_deployment} by {deployment}",
+                        "style": {
+                            "palette": "orange"
+                        },
+                        "type": "area"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Unavailable pods per deployment",
+            "type": "timeseries",
+            "width": 37,
+            "x": 67,
+            "y": 108
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "gray",
+            "board_id": 134088,
+            "font_size": "18",
+            "height": 5,
+            "html": "[High level](https://www.datadoghq.com/blog/monitoring-kubernetes-performance-metrics/#running-pods)",
+            "refresh_every": 30000,
+            "text_align": "center",
+            "tick": true,
+            "tick_edge": "bottom",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 67,
+            "x": 37,
+            "y": 20
+        },
+        {
+            "auto_refresh": false,
+            "bgcolor": "gray",
+            "board_id": 134088,
+            "font_size": "18",
+            "height": 5,
+            "html": "[Resource utilization](https://www.datadoghq.com/blog/monitoring-kubernetes-performance-metrics/#toc-resource-utilization6)",
+            "refresh_every": 30000,
+            "text_align": "center",
+            "tick": true,
+            "tick_edge": "bottom",
+            "tick_pos": "50%",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "note",
+            "width": 87,
+            "x": 107,
+            "y": 20
+        },
+        {
+            "event_size": "s",
+            "height": 35,
+            "query": "sources:kubernetes $node ",
+            "tags_execution": "and",
+            "timeframe": "1w",
+            "title": false,
+            "type": "event_stream",
+            "width": 36,
+            "x": 0,
+            "y": 38
+        },
+        {
+            "board_id": 242731,
+            "height": 14,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "sum:kubernetes.io.write_bytes{$scope,$label,$k8s_state_namespace,$kube_deployment} by {replicaset,host} - avg:kubernetes_state.replicaset.replicas_ready{$scope,$label,$k8s_state_namespace,$kube_deployment} by {host}",
+                        "style": {
+                            "palette": "grey",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "line"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Disk writes per node",
+            "type": "timeseries",
+            "width": 43,
+            "x": 151,
+            "y": 92
+        }
+    ],
+    "width": "100%"
+}

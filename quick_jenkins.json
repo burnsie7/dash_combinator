@@ -1,0 +1,63 @@
+{
+    "board_title": "Jenkins [bbd]",
+    "description": "",
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "job",
+            "prefix": "job"
+        }
+    ],
+    "widgets": [
+        {
+            "board_id": 51223,
+            "height": 7,
+            "isShared": false,
+            "margin": "",
+            "sizing": "fit",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "",
+            "type": "image",
+            "url": "/static/images/screenboard/integrations/jenkins.png",
+            "width": 14,
+            "x": 0,
+            "y": 0
+        },
+        {
+            "board_id": 328079,
+            "height": 9,
+            "isShared": false,
+            "legend": false,
+            "legend_size": "0",
+            "tile_def": {
+                "autoscale": true,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [],
+                        "q": "avg:ansible.elapsed_time{playbook:appserver-web-update}",
+                        "style": {
+                            "palette": "dog_classic",
+                            "type": "solid",
+                            "width": "normal"
+                        },
+                        "type": "bars"
+                    }
+                ],
+                "viz": "timeseries"
+            },
+            "timeframe": "4h",
+            "title": true,
+            "title_align": "left",
+            "title_size": 16,
+            "title_text": "Ansible Elapsed Time",
+            "type": "timeseries",
+            "width": 43,
+            "x": 44,
+            "y": 20
+        }
+    ],
+    "width": "100%"
+}
