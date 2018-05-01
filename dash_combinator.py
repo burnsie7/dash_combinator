@@ -48,18 +48,18 @@ def export_widgets(widgets, dash_type):
     export_widgets = []
     if dash_type == 'screenboard':
         for widget in widgets:
-            title = widget.get('title_text', None) or widget.get('query', None).get('')
+            title = widget.get('title_text', None) or widget.get('query', None)
             w_type = widget.get('type', 'No type specified')
             if w_type == 'note':
                 title = widget.get('html', 'No title or query specified')
             elif w_type == 'image':
                 title = widget.get('url', 'No title or query specified')
-                print("Parsing widget...")
-                print("Title = {}".format(title))
-                print("Type = {}".format(w_type))
-                clone = query_yes_no("Would you like to clone this widget?")
-                if clone:
-                    export_widgets.append(widget)
+            print("Parsing widget...")
+            print("Title = {}".format(title))
+            print("Type = {}".format(w_type))
+            clone = query_yes_no("Would you like to clone this widget?")
+            if clone:
+                export_widgets.append(widget)
     elif dash_type == 'timeboard':
         for widget in widgets:
             title = widget.get('title', None)
